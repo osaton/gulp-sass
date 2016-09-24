@@ -1,0 +1,14 @@
+$ENV: "development" !default;
+$OTHER: 1 !default;
+
+$test-1: #000 !default;
+$test-2: #000 !default;
+
+@if($ENV == "production") {
+  $test-1: #fff;
+  @debug('prod');
+}
+
+@if($OTHER == 3) {
+  $test-2: #fff;
+}

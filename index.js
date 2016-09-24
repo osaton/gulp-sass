@@ -17,6 +17,7 @@ var gulpSass = function gulpSass(options, sync) {
         filePush,
         errorM,
         callback,
+        variable,
         result;
 
     if (file.isNull()) {
@@ -35,7 +36,17 @@ var gulpSass = function gulpSass(options, sync) {
 
 
     opts = clonedeep(options || {});
-    opts.data = file.contents.toString();
+
+    opts.data = ''
+
+    // Add opts.variables to data
+    if(opts.variables && typeof opts.variables === 'object') {
+      for(variable in opts.variables) {
+        opts.data += variable + ': ' + JSON.stringify(opts.variables[variable]) + ';\n';
+      }
+    }
+
+    opts.data += file.contents.toString();
 
     // we set the file path here so that libsass can correctly resolve import paths
     opts.file = file.path;
